@@ -65,6 +65,15 @@ export function addLocalEntry(mode: 'endless' | 'daily', e: LocalEntry): void {
   try { localStorage.setItem(LOCAL_KEY, JSON.stringify(b)); } catch { /* ignore */ }
 }
 
+/** Placeholder name for local runs finished before the player picks a name. */
+export const UNNAMED = 'YOU';
+
+export function nameLocalEntries(name: string): void {
+  const b = loadLocal();
+  for (const e of [...b.endless, ...b.daily]) if (e.name === UNNAMED) e.name = name;
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(b)); } catch { /* ignore */ }
+}
+
 export function localBoard(mode: 'endless' | 'daily', day: string | null): LocalEntry[] {
   const list = loadLocal()[mode];
   return mode === 'daily' ? list.filter((x) => x.day === day) : list;

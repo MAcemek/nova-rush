@@ -28,7 +28,7 @@ import { loadProfile, saveProfile, store } from './meta/profile';
 import { applyRun, dailyBonus, ensureMissions, missionById, summarize } from './meta/missions';
 import { achievementName, checkAchievements, grantAchievement } from './meta/achievements';
 import { byId } from './meta/cosmetics';
-import { addLocalEntry, fetchDaily, fetchLeaderboard, net, runFlagsFor, submitRun } from './api/client';
+import { UNNAMED, addLocalEntry, fetchDaily, fetchLeaderboard, nameLocalEntries, net, runFlagsFor, submitRun } from './api/client';
 import type { RunFlags } from './api/client';
 import { buildPayload, utcDay } from './api/schema';
 import type { RunPayload } from './api/schema';
@@ -439,7 +439,7 @@ function finishRun(sim: Sim): void {
   let payload: RunPayload | null = null;
   if (runFlags.submittable && (cfg.mode === 'endless' || cfg.mode === 'daily')) {
     payload = buildPayload(sim, recorder, cfg.mode, day, p.name ?? 'PILOT');
-    addLocalEntry(cfg.mode, { name: p.name ?? 'YOU', score: sim.score, distance: summary.distance, day, at: Date.now() });
+    addLocalEntry(cfg.mode, { name: p.name ?? UNNAMED, score: sim.score, distance: summary.distance, day, at: Date.now() });
   }
   pendingPayload = payload;
   const needsName = payload !== null && p.name === null;
@@ -467,6 +467,7 @@ async function submitAndRank(payload: RunPayload, mode: 'endless' | 'daily', day
 
 gameOver.onSubmitName = (name: string): void => {
   store.profile.name = name; saveProfile(store.profile);
+  nameLocalEntries(name);
   const pl = pendingPayload;
   if (!pl) return;
   pl.name = name;
