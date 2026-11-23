@@ -1,0 +1,40 @@
+{
+  "name": "nova-rush",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A fast 3D browser arcade shooter with boss fights and a replay-verified leaderboard.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MAcemek/nova-rush.git"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"tsx watch server/index.ts\"",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "fuzz": "tsx scripts/fuzz.ts",
+    "bot": "tsx scripts/bot.ts",
+    "start": "vite build && tsx server/index.ts --serve-dist"
+  },
+  "dependencies": {
+    "express": "5.3.0",
+    "three": "0.186.1",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "26.6.5",
+    "@types/three": "0.186.0",
+    "concurrently": "10.0.6",
+    "lil-gui": "0.21.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vite": "8.3.4",
+    "vitest": "5.0.5"
+  }
+}
