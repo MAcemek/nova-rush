@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "concurrently -k \"vite\" \"tsx watch server/index.ts\"",
     "build": "tsc --noEmit && vite build",
+    "build:demo": "tsc --noEmit && vite build --mode demo --base=./",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "fuzz": "tsx scripts/fuzz.ts",

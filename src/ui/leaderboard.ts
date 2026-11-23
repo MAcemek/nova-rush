@@ -1,5 +1,5 @@
 import { el, show, hide, uiRoot } from './dom';
-import { fetchLeaderboard } from '../api/client';
+import { IS_DEMO, fetchLeaderboard } from '../api/client';
 import { store } from '../meta/profile';
 import type { LbEntry } from '../api/schema';
 
@@ -11,7 +11,7 @@ export function createLeaderboardScreen(): LeaderboardScreen {
   el('div', 'title-logo', wrap, 'LEADERBOARD').style.fontSize = '36px';
   const modeTabs = el('div', 'tabs', wrap);
   const periodTabs = el('div', 'tabs', wrap);
-  const note = el('div', 'lb-note hidden', wrap, 'Offline \u2014 showing local scores');
+  const note = el('div', 'lb-note hidden', wrap, IS_DEMO ? 'Demo: scores are saved in this browser only' : 'Offline \u2014 showing local scores');
   const table = el('table', 'lb-table', wrap);
   const aroundTitle = el('div', 'lb-sub hidden', wrap, 'AROUND YOU');
   const aroundTable = el('table', 'lb-table', wrap);

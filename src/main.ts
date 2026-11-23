@@ -460,6 +460,7 @@ async function submitAndRank(payload: RunPayload, mode: 'endless' | 'daily', day
     const mine = lb.data.around.find((e) => e.name === payload.name);
     if (above && mine) gameOver.setRankInfo('RANK #' + String(res.rank) + ' OF ' + String(res.total), (above.score - mine.score).toLocaleString('en-US') + ' pts from #' + String(above.rank) + ' (' + above.name + ')');
   } else if (res.status === 'queued') gameOver.setRankInfo('Offline \u2014 run saved and queued', null);
+  else if (res.status === 'local') gameOver.setRankInfo('Score saved in this browser', null);
   else if (res.status === 'rejected') gameOver.setRankInfo('Run rejected (' + (res.reason ?? 'error') + ')', null);
   else gameOver.setRankInfo('Run not ranked (debug)', null);
 }

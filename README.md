@@ -11,6 +11,8 @@
 
 Nova Rush is a 3D arcade shooter that runs in the browser. Fly down an endless space corridor that keeps getting faster, blast asteroids and aliens, chain combos, and take on three bosses.
 
+<h3 align="center"><a href="https://macemek.github.io/nova-rush/">Play it in your browser</a></h3>
+
 All of the visuals and audio are generated in code, so there are no model, texture or sound files to download.
 
 <p align="center">
@@ -25,7 +27,7 @@ All of the visuals and audio are generated in code, so there are no model, textu
 - **Combos and near misses**: keep the chain alive and fly close to danger for extra points.
 - **Daily challenge**: everyone gets the same seed each UTC day, with crystal rewards and streaks.
 - **Hangar**: spend crystals on hulls, paints, lasers and trails.
-- **Verified leaderboard**: the server replays each submitted run before accepting its score.
+- **Verified leaderboard**: the server replays each submitted run before accepting its score. The online demo has no server, so its scores stay in your browser.
 - **Synthesized audio**: sound effects and adaptive music made with Web Audio.
 
 ## Screenshots
@@ -104,6 +106,7 @@ Submissions are rate limited, and daily runs are accepted only for today's or ye
 | `npm test` | Runs the test suite |
 | `npm run typecheck` | Checks types |
 | `npm run build` | Checks types and builds the client |
+| `npm run build:demo` | Builds the static demo, which needs no API server |
 | `npm run fuzz -- --runs 500` | Plays randomized runs and checks simulation invariants |
 | `npm run bot -- --runs 200` | Prints balance statistics from autopilot runs |
 

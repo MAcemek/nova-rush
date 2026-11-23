@@ -6,9 +6,12 @@ import type { DailyInfo, LbEntry, LeaderboardResponse, RunPayload } from './sche
 
 export interface RunFlags { countsForProfile: boolean; submittable: boolean }
 export interface LbResult { offline: boolean; data: LeaderboardResponse }
-export type SubmitStatus = 'accepted' | 'rejected' | 'queued' | 'skipped';
+export type SubmitStatus = 'accepted' | 'rejected' | 'queued' | 'skipped' | 'local';
 export interface SubmitResult { status: SubmitStatus; rank?: number; total?: number; reason?: string }
 export interface LocalEntry { name: string; score: number; distance: number; day: string | null; at: number }
+
+/** Static build with no API server (npm run build:demo): scores stay in this browser. */
+export const IS_DEMO: boolean = import.meta.env?.MODE === 'demo';
 
 export const net: { offline: boolean } = { offline: false };
 let forceOffline = false;
@@ -69,6 +72,7 @@ export function localBoard(mode: 'endless' | 'daily', day: string | null): Local
 
 // ---- network ----
 export async function apiFetch(path: string, init?: RequestInit): Promise<Response> {
+  if (IS_DEMO) throw new Error('demo build has no server');
   if (forceOffline) { net.offline = true; throw new Error('offline'); }
   const ac = new AbortController();
   const timer = setTimeout(() => { ac.abort(); }, 2500);
@@ -120,6 +124,7 @@ export async function fetchLeaderboard(q: { mode: 'endless' | 'daily'; period: '
 
 export async function submitRun(p: RunPayload, flags: RunFlags): Promise<SubmitResult> {
   if (!flags.submittable) return { status: 'skipped' };
+  if (IS_DEMO) return { status: 'local' };
   try {
     const r = await postRun(p);
     if (r.status === 200) {
